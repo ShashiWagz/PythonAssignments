@@ -1,4 +1,3 @@
 user = input('Enter your name: ')
-print("Nice to meet you, " + user + "!")
+print("Hello," + user + "! Nice to meet you.")
 
-print("my name is")
