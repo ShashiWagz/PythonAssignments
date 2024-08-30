@@ -6,6 +6,7 @@ num3 = randint(0, 9)
 
 print(f'code1 : {num1}{num2}{num3}')
 
+
 num4 = randint(1, 6)
 num5 = randint(1, 6)
 num6 = randint(1, 6)
