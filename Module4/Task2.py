@@ -1,4 +1,4 @@
-print("CONVERTOR INCHES TO CENTIMETERS  ")
+print("CONVERTOR - INCHES TO CENTIMETERS  ")
 
 print("")
 
@@ -11,7 +11,7 @@ while True:
     centimeters = Inches * 2.54
 
     print("The answer is ", centimeters)
-
+    break
 
 
 
