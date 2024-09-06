@@ -1,22 +1,16 @@
+import random
 
+def dice_roll(sides):
+    return random.randint(1, sides)
 
-def gallon_to_liter(gallons):
-    liter= gallons * 3.7854
-    return liter
+def main():
+    sides=int(input("Enter the number of sides: "))
 
-def main ():
-    while True:
-        input_gallon=int(input("Enter the number of gallons: "))
-
-        if input_gallon<0:
-            print("Please Enter enter a positive number")
-            break
-
-        liter=gallon_to_liter(input_gallon)
-        print(liter)
-        break
+    rolls=0
+    while rolls != sides:
+        rolls =dice_roll(sides)
+        print(f"The rolled :{rolls}")
 
 if __name__ == '__main__':
     main()
-
 
