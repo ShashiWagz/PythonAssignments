@@ -1,5 +1,6 @@
 import mysql.connector
 
+# Create a connection to the MySQL database
 connection = mysql.connector.connect(
     host='127.0.0.1',
     port=3306,
@@ -10,29 +11,36 @@ connection = mysql.connector.connect(
 )
 
 
-def get_airports_by_country_code(country_code):
-    sql = f"""
-        SELECT type, COUNT(*) AS count
-        FROM airport
-        WHERE iso_country = '{country_code}'
-        GROUP BY type
-        ORDER BY count DESC
-        """
-    cursor = connection.cursor()
-    cursor.execute(sql)
-    results = cursor.fetchall()
+def get_airports_by_ident(icao):
+    try:
+        # Prepare the SQL query to fetch airport details by ICAO code
+        sql = f"SELECT name, municipality FROM airport WHERE ident = %s"
 
-    if results:
-        print(f"Airports in country code '{country_code}':")
-        for row in results:
-            airport_type, count = row
-            print(f"{count} {airport_type} airports")
-    else:
-        print(f"No airports found for country code: {country_code}")
+        # Create a cursor to execute the query
+        cursor = connection.cursor()
+        cursor.execute(sql, (icao,))  # Passing ICAO code as a parameter to avoid SQL injection
+
+        # Fetch the result
+        results = cursor.fetchone()
+
+        # Check if any airport is found
+        if results:
+            name, location = results
+            print(f"Airport Name: '{name}', Location: '{location}'")
+        else:
+            print(f"No airports found with ICAO code: {icao}")
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    finally:
+        cursor.close()  # Ensure the cursor is closed
 
 
-if _name_ == "_main_":
-    country_code = input("Enter the country code (e.g., FI for Finland): ").upper()
-    get_airports_by_country_code(country_code)
+# Main program entry
+if __name__ == "__main__":
+    icao_code = input("Enter the ICAO code (e.g., EFHK for Helsinki-Vantaa): ").upper()
+    get_airports_by_ident(icao_code)
 
+# Close the database connection after the operation is complete
 connection.close()
