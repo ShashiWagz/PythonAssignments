@@ -1,34 +1,34 @@
-from geopy.distance import geodesic
+import mysql.connector
+from geopy.distance import great_circle
 
-airport_coordinates = {
-    "KJFK": (40.6413, -73.7781),  # JFK Airport (New York)
-    "EGLL": (51.4700, -0.4543),  # Heathrow Airport (London)
-    "KLAX": (33.9416, -118.4085),  # Los Angeles International Airport
-    "LFPG": (49.0097, 2.5479),  # Charles de Gaulle Airport (Paris)
-    "RJTT": (35.5494, 139.7798),  # Tokyo Haneda Airport
-}
-
-def get_coordinates(icao_code):
-    return airport_coordinates.get(icao_code.upper())
+connection = mysql.connector.connect(
+    host='127.0.0.1',
+    port=3306,
+    database='flight_game',
+    user='root',
+    password='1093',
+    autocommit=True
+)
+def get_airport_coordinates(icao):
+    sql = f"SELECT latitude_deg, longitude_deg FROM airport WHERE ident = '{icao}'"
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    result = cursor.fetchone()
+    return result
 
 def calculate_distance(icao1, icao2):
-    coords_1 = get_coordinates(icao1)
-    coords_2 = get_coordinates(icao2)
+    coord1 = get_airport_coordinates(icao1)
+    coord2 = get_airport_coordinates(icao2)
 
-    if coords_1 and coords_2:
-        distance = geodesic(coords_1, coords_2).kilometers
-        print(f"The distance between {icao1.upper()} and {icao2.upper()} is {distance:.2f} kilometers.")
+    if coord1 and coord2:
+        distance = great_circle(coord1, coord2).kilometers
+        print(f"The distance between {icao1} and {icao2} is {distance:.2f} kilometers.")
     else:
-        print("One or both of the provided ICAO codes are invalid.")
+        print("One or both ICAO codes are invalid or not found in the database.")
 
+if _name_ == "_main_":
+    icao_code1 = input("Enter the ICAO code of the first airport: ").upper()
+    icao_code2 = input("Enter the ICAO code of the second airport: ").upper()
+    calculate_distance(icao_code1, icao_code2)
 
-
-def main():
-    icao1 = input("Enter the ICAO code for the first airport: ").strip()
-    icao2 = input("Enter the ICAO code for the second airport: ").strip()
-
-    calculate_distance(icao1, icao2)
-
-
-if __name__ == "__main__":
-    main()
+connection.close()
