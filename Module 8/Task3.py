@@ -10,7 +10,7 @@ connection = mysql.connector.connect(
     autocommit=True
 )
 def get_airport_coordinates(icao):
-    sql = f"SELECT latitude_deg, longitude_deg FROM airport WHERE ident = '{icao}'"
+    sql = f"SELECT latitude_deg, longitude_deg FROM airport WHERE ident = '{icao}'";
     cursor = connection.cursor()
     cursor.execute(sql)
     result = cursor.fetchone()
