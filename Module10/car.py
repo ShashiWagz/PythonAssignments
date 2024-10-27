@@ -1,9 +1,5 @@
 class Car:
     def __init__(self, reg_number, max_speed, current_speed=0, travelled_distance=0):
-        """
-
-        :type travelled_distance: object
-        """
         self.registration_number = reg_number
         self.maximum_speed = max_speed
         self.current_speed = current_speed

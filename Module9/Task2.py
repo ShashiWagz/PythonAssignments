@@ -19,7 +19,6 @@ print(f'Current Speed after accelerate +70 km/h: {car1.current_speed}')
 car1.accelerate(50)
 print(f'Current Speed after accelerate +50 km/h: {car1.current_speed}')
 
-
 car1.accelerate(-200)
 print(f'Current Speed after emergency break: {car1.current_speed}')
 
