@@ -4,7 +4,7 @@ from tabulate import tabulate
 
 cars = []
 for i in range(10):
-    reg_number=(f"ABC - {i+1}")
+    reg_number=f"ABC - {i+1}"
     maximum_speed= random.randint(100, 200)
     cars.append(Car(reg_number,maximum_speed))
 
@@ -19,6 +19,7 @@ while race:
         car.drive(1)
 
         if car.travelled_distance >= 10000:
+            print(f"Car {car.registration_number} wins!")
             race=False
             break
 
