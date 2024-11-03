@@ -17,7 +17,7 @@ while race:
         car.accelerate(changed_speed)
 
         car.drive(1)
-
+        travelled_distance=0
         if car.travelled_distance >= 10000:
             print(f"Car {car.registration_number} wins!")
             race=False
